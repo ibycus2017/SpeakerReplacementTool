@@ -142,6 +142,11 @@ namespace SpeakerReplacementTool
             dataRow["name"] = @"スペース";
             dataTable.Rows.Add(dataRow);
 
+            dataRow = dataTable.NewRow();
+            dataRow["code"] = default(string);
+            dataRow["name"] = "なし";
+            dataTable.Rows.Add(dataRow);
+
             this.cboDelimiter.ValueMember = "code";
             this.cboDelimiter.DisplayMember = "name";
             this.cboDelimiter.DataSource = dataTable;
@@ -212,7 +217,7 @@ namespace SpeakerReplacementTool
         /// </summary>
         private void ReductionRow()
         {
-            if (dgvMain.Rows.Count <= 0) return;
+            if (dgvMain.Rows.Count <= default(int)) return;
             dgvMain.Rows.RemoveAt(dgvMain.Rows.Count - 1);
         }
         #endregion
@@ -231,7 +236,7 @@ namespace SpeakerReplacementTool
             var selectedFileName = openFileDialog.FileName;
 
             var encoding = new EncodingFetcher().FetchEncoding(System.IO.File.ReadAllBytes(selectedFileName));
-            if (encoding == null) return;
+            if (encoding == default(System.Text.Encoding)) return;
             this.lblEncoding.Text = encoding.EncodingName;
             var readLines = (IReadOnlyList<string>)System.IO.File.ReadAllLines(selectedFileName, encoding);
             this.dgvMain.Rows.Clear();
@@ -243,8 +248,8 @@ namespace SpeakerReplacementTool
                 this.dgvMain.Rows.Add();
                 var dgvRows = this.dgvMain.Rows[this.dgvMain.Rows.Count - 1];
                 dgvRows.Cells[COLS_IDX_NO].Value = Convert.ToString(this.dgvMain.Rows.Count);
-                if (0 <= readValues.Count - 1) dgvRows.Cells[COLS_IDX_OLD_VALUE].Value = Convert.ToString(readValues[0]);
-                if (1 <= readValues.Count - 1) dgvRows.Cells[COLS_IDX_NEW_VALUE].Value = Convert.ToString(readValues[1]);
+                dgvRows.Cells[COLS_IDX_OLD_VALUE].Value = (default(int) + 0 <= readValues.Count - 1) ? Convert.ToString(readValues[default(int) + 0]) : default(string);
+                dgvRows.Cells[COLS_IDX_NEW_VALUE].Value = (default(int) + 1 <= readValues.Count - 1) ? Convert.ToString(readValues[default(int) + 1]) : default(string);
             }
         }
         #endregion

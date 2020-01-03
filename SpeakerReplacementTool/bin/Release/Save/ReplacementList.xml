@@ -1,2 +1,275 @@
 <?xml version="1.0" standalone="yes"?>
-<DocumentElement />
+<DocumentElement>
+  <replacement_list>
+    <colId>1</colId>
+    <colOldValue>&lt;?xml version="1.0" standalone="yes"?&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>2</colId>
+    <colOldValue>&lt;DocumentElement&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>3</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>4</colId>
+    <colOldValue>    &lt;colId&gt;1&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>5</colId>
+    <colOldValue>    &lt;colOldValue&gt;あ&lt;/colOldValue&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>6</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>7</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>8</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>9</colId>
+    <colOldValue>    &lt;colId&gt;2&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>10</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>11</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>12</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>13</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>14</colId>
+    <colOldValue>    &lt;colId&gt;3&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>15</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>16</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>17</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>18</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>19</colId>
+    <colOldValue>    &lt;colId&gt;4&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>20</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>21</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>22</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>23</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>24</colId>
+    <colOldValue>    &lt;colId&gt;5&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>25</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>26</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>27</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>28</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>29</colId>
+    <colOldValue>    &lt;colId&gt;6&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>30</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>31</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>32</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>33</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>34</colId>
+    <colOldValue>    &lt;colId&gt;7&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>35</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>36</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>37</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>38</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>39</colId>
+    <colOldValue>    &lt;colId&gt;8&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>40</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>41</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>42</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>43</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>44</colId>
+    <colOldValue>    &lt;colId&gt;9&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>45</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>46</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>47</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>48</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>49</colId>
+    <colOldValue>    &lt;colId&gt;10&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>50</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>51</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>52</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>53</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>54</colId>
+    <colOldValue>    &lt;colId&gt;11&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>55</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>56</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>57</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>58</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>59</colId>
+    <colOldValue>    &lt;colId&gt;12&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>60</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>61</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>62</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>63</colId>
+    <colOldValue>  &lt;replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>64</colId>
+    <colOldValue>    &lt;colId&gt;13&lt;/colId&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>65</colId>
+    <colOldValue>    &lt;colOldValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>66</colId>
+    <colOldValue>    &lt;colNewValue /&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>67</colId>
+    <colOldValue>  &lt;/replacement_list&gt;</colOldValue>
+  </replacement_list>
+  <replacement_list>
+    <colId>68</colId>
+    <colOldValue>&lt;/DocumentElement&gt;</colOldValue>
+  </replacement_list>
+</DocumentElement>

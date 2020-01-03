@@ -88,13 +88,13 @@ namespace SpeakerReplacementTool
         private void ReplaceFile(in bool IsPreview )
         {
             var replacementList = new ReplacementListReader().ReadList();
-            if (replacementList.Count == 0) return;
+            if (replacementList.Count == default(int)) return;
 
             var selectedFileName = this.FetchSelectedFileName();
-            if (selectedFileName == System.String.Empty) return;
+            if (selectedFileName == default(string)) return;
 
             var encoding = new EncodingFetcher().FetchEncoding(System.IO.File.ReadAllBytes(selectedFileName));
-            if (encoding == null) return;
+            if (encoding == default(System.Text.Encoding)) return;
             this.lblEncoding.Text = encoding.EncodingName;
 
             var readLines = this.ReadFileAllLines(selectedFileName, encoding);
@@ -131,7 +131,7 @@ namespace SpeakerReplacementTool
         private string FetchSelectedFileName()
         {
             var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "TEXTファイル(*.txt)|*.txt|HTMLファイル(*.html)|*.html|すべてのファイル(*.*)|*.*";
+            openFileDialog.Filter = "TEXTファイル(*.txt)|*.txt|すべてのファイル(*.*)|*.*";
             openFileDialog.FilterIndex = 1;
             openFileDialog.Title = "ファイルを選択してください";
             if (openFileDialog.ShowDialog() == DialogResult.Cancel) return System.String.Empty;
@@ -170,11 +170,11 @@ namespace SpeakerReplacementTool
         private IReadOnlyList<string>ReplaceFileAllLines( in string delimiterValue , IReadOnlyList<string> readLines, in IReadOnlyList<ReplacementListDefine> replacementList)
         {
             var fileAllLines = (IList<string>)readLines;
-            if(replacementList.Count == 0) return (IReadOnlyList<string>)fileAllLines;
+            if(replacementList.Count == default(int)) return (IReadOnlyList<string>)fileAllLines;
 
             foreach (ReplacementListDefine deifne in replacementList)
             {
-                if (fileAllLines.Count > 0)
+                if (fileAllLines.Count > default(int))
                 {
                     var newAllLines = new List<string>();
                     foreach (var fileLine in fileAllLines)

@@ -8,12 +8,27 @@ namespace SpeakerReplacementTool
 {
     class EncodingFetcher
     {
+        #region 変数
+        /// <summary>
+        /// 変数
+        /// </summary>
+        private const byte characterByteEscape = 0x1B;
+        private const byte characterByteAtmark = 0x40;
+        private const byte characterByteDollar = 0x24;
+        private const byte characterByteAnd = 0x26;
+        private const byte characterByteOpen = 0x28;
+        private const byte characterByteB = 0x42;
+        private const byte characterByteD = 0x44;
+        private const byte characterByteJ = 0x4A;
+        private const byte characterBytebI = 0x49;
+        #endregion
+
         #region 文字コード取得
         /// <summary>
         /// 文字コードを判別する
         /// </summary>
         /// <remarks>
-        /// Jcode.pmのgetcodeメソッドを移植したものです。
+        /// Jcode.pmのgetcodeメソッドを加工したものです。
         /// Jcode.pm(http://openlab.ring.gr.jp/Jcode/index-j.html)
         /// Jcode.pmの著作権情報
         /// Copyright 1999-2005 Dan Kogai <dankogai@dan.co.jp>
@@ -25,15 +40,6 @@ namespace SpeakerReplacementTool
         /// 判断できなかった時はnull。</returns>
         public System.Text.Encoding FetchEncoding(byte[] bytes)
         {
-            const byte bEscape = 0x1B;
-            const byte bAt = 0x40;
-            const byte bDollar = 0x24;
-            const byte bAnd = 0x26;
-            const byte bOpen = 0x28;    //'('
-            const byte bB = 0x42;
-            const byte bD = 0x44;
-            const byte bJ = 0x4A;
-            const byte bI = 0x49;
 
             var bytesLength = bytes.Length;
             var byte1 = default(byte);
@@ -51,17 +57,19 @@ namespace SpeakerReplacementTool
                 {
                     //'binary'
                     isBinary = true;
-                    if (byte1 == 0x00 && i < bytesLength - 1 && bytes[i + 1] <= 0x7F) return System.Text.Encoding.Unicode;
+                    if (byte1 == 0x00 && i < bytesLength - 1 && bytes[i + 1] <= 0x7F) 
+                        return System.Text.Encoding.Unicode;
                 }
             }
-            if (isBinary) return null;
+            if (isBinary == true) 
+                return default(System.Text.Encoding);
 
             //not Japanese
             var notJapanese = true;
             for (var i = 0; i < bytesLength; i++)
             {
                 byte1 = bytes[i];
-                if (byte1 == bEscape || 0x80 <= byte1)
+                if (byte1 == characterByteEscape || 0x80 <= byte1)
                 {
                     notJapanese = false;
                     break;
@@ -76,19 +84,19 @@ namespace SpeakerReplacementTool
                 byte2 = bytes[i + 1];
                 byte3 = bytes[i + 2];
 
-                if (byte1 == bEscape)
+                if (byte1 == characterByteEscape)
                 {
-                    if (byte2 == bDollar && byte3 == bAt) return System.Text.Encoding.GetEncoding(50220);
-                    if (byte2 == bDollar && byte3 == bB) return System.Text.Encoding.GetEncoding(50220);
-                    if (byte2 == bOpen && (byte3 == bB || byte3 == bJ)) return System.Text.Encoding.GetEncoding(50220);
-                    if (byte2 == bOpen && byte3 == bI) return System.Text.Encoding.GetEncoding(50220);
+                    if (byte2 == characterByteDollar && byte3 == characterByteAtmark) return System.Text.Encoding.GetEncoding(50220);
+                    if (byte2 == characterByteDollar && byte3 == characterByteB) return System.Text.Encoding.GetEncoding(50220);
+                    if (byte2 == characterByteOpen && (byte3 == characterByteB || byte3 == characterByteJ)) return System.Text.Encoding.GetEncoding(50220);
+                    if (byte2 == characterByteOpen && byte3 == characterBytebI) return System.Text.Encoding.GetEncoding(50220);
                     if (i < bytesLength - 3)
                     {
                         byte4 = bytes[i + 3];
-                        if (byte2 == bDollar && byte3 == bOpen && byte4 == bD) return System.Text.Encoding.GetEncoding(50220);
+                        if (byte2 == characterByteDollar && byte3 == characterByteOpen && byte4 == characterByteD) return System.Text.Encoding.GetEncoding(50220);
                         if (i < bytesLength - 5 &&
-                            byte2 == bAnd && byte3 == bAt && byte4 == bEscape &&
-                            bytes[i + 4] == bDollar && bytes[i + 5] == bB) return System.Text.Encoding.GetEncoding(50220);
+                            byte2 == characterByteAnd && byte3 == characterByteAtmark && byte4 == characterByteEscape &&
+                            bytes[i + 4] == characterByteDollar && bytes[i + 5] == characterByteB) return System.Text.Encoding.GetEncoding(50220);
                     }
                 }
             }
@@ -159,12 +167,10 @@ namespace SpeakerReplacementTool
             //M. Takahashi's suggestion
             //utf8 += utf8 / 2;
 
-            System.Diagnostics.Debug.WriteLine(
-                string.Format("sjis = {0}, euc = {1}, utf8 = {2}", characterCountSjis, characterCountEuc, characterCountUtf8));
             if (characterCountEuc > characterCountSjis && characterCountEuc > characterCountUtf8) return System.Text.Encoding.GetEncoding(51932);
             if (characterCountSjis > characterCountEuc && characterCountSjis > characterCountUtf8) return System.Text.Encoding.GetEncoding(932);
             if (characterCountUtf8 > characterCountEuc && characterCountUtf8 > characterCountSjis) return System.Text.Encoding.UTF8;
-            return null;
+            return default(System.Text.Encoding);
         }
         #endregion
     }

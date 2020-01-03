@@ -34,12 +34,12 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnPreview = new System.Windows.Forms.Button();
             this.tlpBody = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
             this.lnkReplacementList = new System.Windows.Forms.LinkLabel();
             this.dgvOld = new System.Windows.Forms.DataGridView();
             this.colOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvNew = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
             this.lblEncoding = new System.Windows.Forms.Label();
             this.tlpBody.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOld)).BeginInit();
@@ -184,6 +184,19 @@
             this.tlpBody.Size = new System.Drawing.Size(784, 561);
             this.tlpBody.TabIndex = 0;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.tlpBody.SetColumnSpan(this.label1, 18);
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(39, 476);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(702, 28);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "文字コード";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // lnkReplacementList
             // 
             this.lnkReplacementList.AutoSize = true;
@@ -263,19 +276,6 @@
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
             this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.dataGridViewTextBoxColumn3.Width = 3000;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.tlpBody.SetColumnSpan(this.label1, 18);
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(39, 476);
-            this.label1.Margin = new System.Windows.Forms.Padding(0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(702, 28);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "文字コード";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblEncoding
             // 
