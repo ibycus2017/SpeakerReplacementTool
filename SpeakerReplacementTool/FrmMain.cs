@@ -12,32 +12,15 @@ namespace SpeakerReplacementTool
 {
     public partial class FrmMain : Form
     {
-        #region 変数定義
+        #region コンストラクタ
         /// <summary>
-        /// 変数定義
+        /// コンストラクタ
         /// </summary>
-        private static readonly int COLS_IDX_NO = 0;
-        private static readonly int COLS_IDX_OLD_VALUE = 1;
-        private static readonly int COLS_IDX_NEW_VALUE = 2;
-        private static readonly string SaveDirectoryPath = System.Environment.CurrentDirectory + @"\Save";
-        private static readonly string SaveFilePath = System.Environment.CurrentDirectory + @"\Save\" + "ReplacementList.xml";
-        #endregion
-
-        #region 構造体（置換リスト）
-        /// <summary>
-        /// 構造体（置換リスト）
-        /// </summary>
-        private struct ReplacementListRow
-        {
-            public string oldValue;
-            public string newValue;
-        }
-        #endregion
-
         public FrmMain()
         {
             InitializeComponent();
         }
+        #endregion
 
         #region イベント（フォームロード）
         /// <summary>
@@ -48,56 +31,6 @@ namespace SpeakerReplacementTool
         private void Form_Load(object sender, EventArgs e)
         {
             this.MakeScreen();
-        }
-        #endregion
-
-        #region メソッド（画面作成）
-        /// <summary>
-        /// メソッド（画面作成）
-        /// </summary>
-        private void MakeScreen()
-        {
-            this.MakeComboBox();
-            this.MakeDataGridView();
-            this.txtDelimiter.Text = "：";
-        }
-        #endregion
-
-        #region メソッド（データグリッドビュー作成）
-        /// <summary>
-        /// メソッド（データグリッドビュー作成）
-        /// </summary>
-        private void MakeDataGridView()
-        {
-            if (System.IO.File.Exists(SaveFilePath) == true)
-            {
-                var dataSet = new DataSet();
-                dataSet.ReadXml(SaveFilePath);
-                var dataTable = dataSet.Tables[0];
-                dataTable = dataSet.Tables[0];
-                if(dataTable.Rows.Count > 0)
-                {
-                    foreach(DataRow dataRow in dataTable.Rows)
-                    {
-                        this.dgvMain.Rows.Add();
-                        this.dgvMain.Rows[this.dgvMain.Rows.Count - 1].Cells[COLS_IDX_NO].Value = Convert.ToString(this.dgvMain.Rows.Count);
-                        this.dgvMain.Rows[this.dgvMain.Rows.Count - 1].Cells[COLS_IDX_OLD_VALUE].Value = Convert.ToString(dataRow[dgvMain.Columns[COLS_IDX_OLD_VALUE].Name]);
-                        this.dgvMain.Rows[this.dgvMain.Rows.Count - 1].Cells[COLS_IDX_NEW_VALUE].Value = Convert.ToString(dataRow[dgvMain.Columns[COLS_IDX_NEW_VALUE].Name]);
-                    }
-                }
-            }
-            else
-            {
-                var repeatCount = 30;
-                for (var i = 1; i <= repeatCount; i++)
-                {
-                    this.dgvMain.Rows.Add();
-                    this.dgvMain.Rows[this.dgvMain.Rows.Count - 1].Cells[COLS_IDX_NO].Value = Convert.ToString(this.dgvMain.Rows.Count);
-                    this.dgvMain.Rows[this.dgvMain.Rows.Count - 1].Cells[COLS_IDX_OLD_VALUE].Value = System.String.Empty;
-                    this.dgvMain.Rows[this.dgvMain.Rows.Count - 1].Cells[COLS_IDX_NEW_VALUE].Value = System.String.Empty;
-                }
-            }
-
         }
         #endregion
 
@@ -126,6 +59,27 @@ namespace SpeakerReplacementTool
         }
         #endregion
 
+        #region イベント（リンククリック：置換リスト）
+        /// <summary>
+        /// イベント（リンククリック：置換リスト）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lnkReplacementList_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.ShowDialogFrmReplacementList();
+        }
+        #endregion
+
+        #region メソッド（画面作成）
+        /// <summary>
+        /// メソッド（画面作成）
+        /// </summary>
+        private void MakeScreen()
+        {
+            this.txtDelimiter.Text = "：";
+        }
+        #endregion
 
         #region メソッド（ファイル置換）
         /// <summary>
@@ -133,28 +87,39 @@ namespace SpeakerReplacementTool
         /// </summary>
         private void ReplaceFile(in bool IsPreview )
         {
-            var replacementList = this.FetchReplacementList();
+            var replacementList = new ReplacementListReader().ReadList();
             if (replacementList.Count == 0) return;
 
             var selectedFileName = this.FetchSelectedFileName();
             if (selectedFileName == System.String.Empty) return;
 
-            var encoding = System.Text.Encoding.GetEncoding(Convert.ToString(this.cboEncoding.SelectedValue));
+            var encoding = new EncodingFetcher().FetchEncoding(System.IO.File.ReadAllBytes(selectedFileName));
             if (encoding == null) return;
+            this.lblEncoding.Text = encoding.EncodingName;
 
             var readLines = this.ReadFileAllLines(selectedFileName, encoding);
             var replacedLines = this.ReplaceFileAllLines(txtDelimiter.Text, (IReadOnlyList<string>)readLines, replacementList);
-            if(IsPreview == true)
-            {
-                var frm = new FrmSub();
-                frm.Memo = string.Join(Environment.NewLine, readLines);
-                frm.ShowDialog();
+            this.dgvOld.Rows.Clear();
+            foreach (var readLine in readLines) {
+                this.dgvOld.Rows.Add();
+                this.dgvOld.Rows[dgvOld.Rows.Count - 1].Cells[0].Value = Convert.ToString(readLine);
             }
-            else
+            this.dgvNew.Rows.Clear();
+            foreach (var replacedLine in replacedLines)
             {
-                this.WriteFileAllLines(selectedFileName, encoding, replacedLines);
+                this.dgvNew.Rows.Add();
+                this.dgvNew.Rows[dgvNew.Rows.Count - 1].Cells[0].Value = Convert.ToString(replacedLine);
             }
-            this.SaveReplacementList();
+            foreach(DataGridViewRow dataGridViewRow in this.dgvNew.Rows)
+            {
+                var newValueString = Convert.ToString(dataGridViewRow.Cells[0].Value);
+                var oldValueString = (this.dgvOld.Rows.Count - 1 >= dataGridViewRow.Index) ?
+                    Convert.ToString(dgvOld.Rows[dataGridViewRow.Index].Cells[0].Value) : System.String.Empty;
+                if (newValueString != oldValueString) {
+                    dataGridViewRow.Cells[0].Style.BackColor = System.Drawing.Color.Yellow;
+                }
+            }
+            if (IsPreview == false) this.WriteFileAllLines(selectedFileName, encoding, replacedLines);
         }
         #endregion
 
@@ -171,33 +136,6 @@ namespace SpeakerReplacementTool
             openFileDialog.Title = "ファイルを選択してください";
             if (openFileDialog.ShowDialog() == DialogResult.Cancel) return System.String.Empty;
             return openFileDialog.FileName;
-        }
-        #endregion
-
-        #region メソッド（置換リストを取得する）
-        /// <summary>
-        /// メソッド（置換リストを取得する）
-        /// </summary>
-        /// <returns></returns>
-        private List<ReplacementListRow> FetchReplacementList()
-        {
-            var replacementList = new List<ReplacementListRow>();
-            if (dgvMain.Rows.Count <= 1) return replacementList;
-            foreach (DataGridViewRow dataGridViewRow in dgvMain.Rows)
-            {
-                var oldValue = Convert.ToString(dataGridViewRow.Cells[COLS_IDX_OLD_VALUE].Value);
-                var newValue = Convert.ToString(dataGridViewRow.Cells[COLS_IDX_NEW_VALUE].Value);
-
-                if (oldValue.Length > 0 || newValue.Length > 0)
-                {
-                    replacementList.Add(new ReplacementListRow
-                    {
-                        oldValue = oldValue,
-                        newValue = newValue
-                    });
-                }
-            }
-            return replacementList;
         }
         #endregion
 
@@ -229,26 +167,26 @@ namespace SpeakerReplacementTool
         /// <summary>
         /// メソッド（ファイルを置換する）
         /// </summary>
-        private IReadOnlyList<string>ReplaceFileAllLines( in string delimiterValue , IReadOnlyList<string> readLines, in IReadOnlyList<ReplacementListRow> replacementList)
+        private IReadOnlyList<string>ReplaceFileAllLines( in string delimiterValue , IReadOnlyList<string> readLines, in IReadOnlyList<ReplacementListDefine> replacementList)
         {
             var fileAllLines = (IList<string>)readLines;
             if(replacementList.Count == 0) return (IReadOnlyList<string>)fileAllLines;
 
-            foreach (ReplacementListRow replacementListRow in replacementList)
+            foreach (ReplacementListDefine deifne in replacementList)
             {
                 if (fileAllLines.Count > 0)
                 {
                     var newAllLines = new List<string>();
                     foreach (var fileLine in fileAllLines)
                     {
-                        var findValue = replacementListRow.oldValue + delimiterValue;
+                        var findValue = deifne.OldValue + delimiterValue;
                         if (fileLine.StartsWith(findValue) == true)
                         {
                             var primaryString = fileLine.Substring(0, findValue.Length);
                             var seconderyString = System.String.Empty;
                             var seconderyStringLength = fileLine.Length - findValue.Length;
                             if (seconderyStringLength > 1) seconderyString = fileLine.Substring(findValue.Length + 1 - 1, seconderyStringLength);
-                            primaryString = replacementListRow.newValue + delimiterValue;
+                            primaryString = deifne.NewValue + delimiterValue;
                             newAllLines.Add(primaryString + seconderyString);
                         }
                         else
@@ -263,58 +201,16 @@ namespace SpeakerReplacementTool
         }
         #endregion
 
-        #region メソッド（コンボボックス作成）
+        #region メソッド（ダイアログ表示：置換リスト）
         /// <summary>
-        /// メソッド（コンボボックス作成）
+        /// メソッド（ダイアログ表示：置換リスト）
         /// </summary>
-        private void MakeComboBox()
+        private void ShowDialogFrmReplacementList()
         {
-            var dataTable = new DataTable();
-            dataTable.Columns.Add("code", typeof(string));
-            dataTable.Columns.Add("name", typeof(string));
-
-            var dataRow = dataTable.NewRow();
-            dataRow["code"] = "utf-8";
-            dataRow["name"] = "UTF-8";
-            dataTable.Rows.Add(dataRow);
-
-            dataRow = dataTable.NewRow();
-            dataRow["code"] = "shift_jis";
-            dataRow["name"] = "シフトJIS";
-            dataTable.Rows.Add(dataRow);
-
-            cboEncoding.ValueMember = "code";
-            cboEncoding.DisplayMember = "name";
-            cboEncoding.DataSource = dataTable;
+            var form = new FrmReplacementList();
+            form.ShowDialog();
+            form.Dispose();
         }
         #endregion
-
-        #region メソッド（置換リストを保存する）
-        /// <summary>
-        /// メソッド（置換リストを保存する）
-        /// </summary>
-        private void SaveReplacementList()
-        {
-            if (System.IO.Directory.Exists(SaveDirectoryPath) == false) 
-                System.IO.Directory.CreateDirectory(SaveDirectoryPath);
-
-            var dataTable = new DataTable();
-            foreach(DataGridViewColumn dataGridViewColumn in dgvMain.Columns)
-                dataTable.Columns.Add(dataGridViewColumn.Name);
-
-            foreach (DataGridViewRow dataGridViewRow in dgvMain.Rows)
-            {
-                var dataTableRow = dataTable.NewRow();
-                foreach (DataGridViewColumn dataGridViewColumn in dgvMain.Columns)
-                    dataTableRow[dataGridViewColumn.Index] = dataGridViewRow.Cells[dataGridViewColumn.Index].Value;
-
-                dataTable.Rows.Add(dataTableRow);
-            }
-            dataTable.TableName = "replacement_list";
-            dataTable.WriteXml(SaveFilePath);
-
-        }
-        #endregion
-
     }
 }
