@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeakerReplacementTool", "SpeakerReplacementTool\SpeakerReplacementTool.csproj", "{0CB0E006-9A8F-441A-94FF-E2FB4E9BA975}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CB0E006-9A8F-441A-94FF-E2FB4E9BA975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CB0E006-9A8F-441A-94FF-E2FB4E9BA975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CB0E006-9A8F-441A-94FF-E2FB4E9BA975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CB0E006-9A8F-441A-94FF-E2FB4E9BA975}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB9BADB8-9955-4D31-AEF9-4712FF163415}
+	EndGlobalSection
+EndGlobal
