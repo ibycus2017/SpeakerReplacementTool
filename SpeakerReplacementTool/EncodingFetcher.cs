@@ -6,170 +6,203 @@ using System.Threading.Tasks;
 
 namespace SpeakerReplacementTool
 {
-    class EncodingFetcher
+    public class EncodingFetcher
     {
-        #region 変数
+        #region メンバ変数
         /// <summary>
-        /// 変数
+        /// メンバ変数
         /// </summary>
-        private const byte characterByteEscape = 0x1B;
-        private const byte characterByteAtmark = 0x40;
-        private const byte characterByteDollar = 0x24;
-        private const byte characterByteAnd = 0x26;
-        private const byte characterByteOpen = 0x28;
-        private const byte characterByteB = 0x42;
-        private const byte characterByteD = 0x44;
-        private const byte characterByteJ = 0x4A;
-        private const byte characterBytebI = 0x49;
+        private static readonly byte ESCAPE_BYTE = 0x1B;
+        private static readonly byte ATMARK_BYTE = 0x40;
+        private static readonly byte DOLLAR_BYTE = 0x24;
+        private static readonly byte AND_BYTE = 0x26;
+        private static readonly byte OPEN_BYTE = 0x28;
+        private static readonly byte B_BYTE = 0x42;
+        private static readonly byte D_BYTE = 0x44;
+        private static readonly byte J_BYTE = 0x4A;
+        private static readonly byte I_BYTE = 0x49;
         #endregion
 
-        #region 文字コード取得
+        #region メソッド（文字コード取得）
         /// <summary>
-        /// 文字コードを判別する
+        /// メソッド（文字コード取得）
         /// </summary>
-        /// <remarks>
-        /// Jcode.pmのgetcodeメソッドを加工したものです。
-        /// Jcode.pm(http://openlab.ring.gr.jp/Jcode/index-j.html)
-        /// Jcode.pmの著作権情報
-        /// Copyright 1999-2005 Dan Kogai <dankogai@dan.co.jp>
-        /// This library is free software; you can redistribute it and/or modify it
-        ///  under the same terms as Perl itself.
-        /// </remarks>
-        /// <param name="bytes">文字コードを調べるデータ</param>
-        /// <returns>適当と思われるEncodingオブジェクト。
-        /// 判断できなかった時はnull。</returns>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         public System.Text.Encoding FetchEncoding(byte[] bytes)
         {
-
-            var bytesLength = bytes.Length;
+            var byteLength = bytes.Length;
             var byte1 = default(byte);
-            var byte2 = default(byte);
-            var byte3 = default(byte);
-            var byte4 = default(byte);
-
-            //Encode::is_utf8 は無視
 
             var isBinary = false;
-            for (var i = 0; i < bytesLength; i++)
+            for (var byteIndex = 0; byteIndex < byteLength; byteIndex++)
             {
-                byte1 = bytes[i];
-                if (byte1 <= 0x06 || byte1 == 0x7F || byte1 == 0xFF)
+                byte1 = bytes[byteIndex];
+                if (byte1 <= 0x06 || 
+                    byte1 == 0x7F || 
+                    byte1 == 0xFF)
                 {
-                    //'binary'
                     isBinary = true;
-                    if (byte1 == 0x00 && i < bytesLength - 1 && bytes[i + 1] <= 0x7F) 
+                    if (byte1 == 0x00 && 
+                        byteIndex < byteLength - 1 && 
+                        bytes[byteIndex + 1] <= 0x7F)
                         return System.Text.Encoding.Unicode;
                 }
             }
-            if (isBinary == true) 
-                return default(System.Text.Encoding);
+            if (isBinary == true) return default(System.Text.Encoding);
 
             //not Japanese
             var notJapanese = true;
-            for (var i = 0; i < bytesLength; i++)
+            for (var byteIndex = 0; byteIndex < byteLength; byteIndex++)
             {
-                byte1 = bytes[i];
-                if (byte1 == characterByteEscape || 0x80 <= byte1)
+                byte1 = bytes[byteIndex];
+                if (byte1 == ESCAPE_BYTE ||
+                    0x80 <= byte1)
                 {
                     notJapanese = false;
                     break;
                 }
             }
+            if (notJapanese == true) return System.Text.Encoding.ASCII;
 
-            if (notJapanese) return System.Text.Encoding.ASCII;
-
-            for (var i = 0; i < bytesLength - 2; i++)
+            var byte2 = default(byte);
+            var byte3 = default(byte);
+            var byte4 = default(byte);
+            for (var byteIndex = 0; byteIndex < byteLength - 2; byteIndex++)
             {
-                byte1 = bytes[i];
-                byte2 = bytes[i + 1];
-                byte3 = bytes[i + 2];
+                byte1 = bytes[byteIndex];
+                byte2 = bytes[byteIndex + 1];
+                byte3 = bytes[byteIndex + 2];
 
-                if (byte1 == characterByteEscape)
+                if (byte1 == ESCAPE_BYTE)
                 {
-                    if (byte2 == characterByteDollar && byte3 == characterByteAtmark) return System.Text.Encoding.GetEncoding(50220);
-                    if (byte2 == characterByteDollar && byte3 == characterByteB) return System.Text.Encoding.GetEncoding(50220);
-                    if (byte2 == characterByteOpen && (byte3 == characterByteB || byte3 == characterByteJ)) return System.Text.Encoding.GetEncoding(50220);
-                    if (byte2 == characterByteOpen && byte3 == characterBytebI) return System.Text.Encoding.GetEncoding(50220);
-                    if (i < bytesLength - 3)
+                    //JIS_0208 1978
+                    if (byte2 == DOLLAR_BYTE && 
+                        byte3 == ATMARK_BYTE) 
+                        return System.Text.Encoding.GetEncoding(50220);
+
+                    //JIS_0208 1983
+                    if (byte2 == DOLLAR_BYTE && 
+                        byte3 == B_BYTE) 
+                        return System.Text.Encoding.GetEncoding(50220);
+
+                    //JIS_ASC
+                    if (byte2 == OPEN_BYTE && 
+                       (byte3 == B_BYTE || 
+                        byte3 == J_BYTE)) 
+                        return System.Text.Encoding.GetEncoding(50220);
+
+                    //JIS_KANA
+                    if (byte2 == OPEN_BYTE && 
+                        byte3 == I_BYTE) 
+                        return System.Text.Encoding.GetEncoding(50220);
+
+                    if (byteIndex < byteLength - 3)
                     {
-                        byte4 = bytes[i + 3];
-                        if (byte2 == characterByteDollar && byte3 == characterByteOpen && byte4 == characterByteD) return System.Text.Encoding.GetEncoding(50220);
-                        if (i < bytesLength - 5 &&
-                            byte2 == characterByteAnd && byte3 == characterByteAtmark && byte4 == characterByteEscape &&
-                            bytes[i + 4] == characterByteDollar && bytes[i + 5] == characterByteB) return System.Text.Encoding.GetEncoding(50220);
+                        byte4 = bytes[byteIndex + 3];
+
+                        //JIS_0212
+                        if (byte2 == DOLLAR_BYTE && 
+                            byte3 == OPEN_BYTE && 
+                            byte4 == D_BYTE)
+                            return System.Text.Encoding.GetEncoding(50220);
+
+                        //JIS_0208 1990
+                        if (byteIndex < byteLength - 5 &&
+                            byte2 == AND_BYTE && 
+                            byte3 == ATMARK_BYTE && 
+                            byte4 == ESCAPE_BYTE &&
+                            bytes[byteIndex + 4] == DOLLAR_BYTE && 
+                            bytes[byteIndex + 5] == B_BYTE)
+                            return System.Text.Encoding.GetEncoding(50220);
                     }
                 }
             }
 
-            //should be euc|sjis|utf8
-            //use of (?:) by Hiroki Ohzaki <ohzaki@iod.ricoh.co.jp>
-            var characterCountSjis = default(Int32);
-            var characterCountEuc = default(Int32);
-            var characterCountUtf8 = default(Int32);
-            for (var i = 0; i < bytesLength - 1; i++)
+            var countSjis = default(Int32);
+            var countEuc = default(Int32);
+            var countUtf8 = default(Int32);
+            for (var byteIndex = 0; byteIndex < byteLength - 1; byteIndex++)
             {
-                byte1 = bytes[i];
-                byte2 = bytes[i + 1];
-                if (((0x81 <= byte1 && byte1 <= 0x9F) || (0xE0 <= byte1 && byte1 <= 0xFC)) &&
-                    ((0x40 <= byte2 && byte2 <= 0x7E) || (0x80 <= byte2 && byte2 <= 0xFC)))
+                byte1 = bytes[byteIndex];
+                byte2 = bytes[byteIndex + 1];
+                if (((0x81 <= byte1 && byte1 <= 0x9F) || 
+                     (0xE0 <= byte1 && byte1 <= 0xFC)) &&
+                    ((0x40 <= byte2 && byte2 <= 0x7E) || 
+                     (0x80 <= byte2 && byte2 <= 0xFC)))
                 {
                     //SJIS_C
-                    characterCountSjis += 2;
-                    i++;
+                    countSjis += 2;
+                    byteIndex++;
                 }
             }
-            for (var i = 0; i < bytesLength - 1; i++)
+            for (var byteIndex = 0; byteIndex < byteLength - 1; byteIndex++)
             {
-                byte1 = bytes[i];
-                byte2 = bytes[i + 1];
-                if (((0xA1 <= byte1 && byte1 <= 0xFE) && (0xA1 <= byte2 && byte2 <= 0xFE)) ||
-                    (byte1 == 0x8E && (0xA1 <= byte2 && byte2 <= 0xDF)))
+                byte1 = bytes[byteIndex];
+                byte2 = bytes[byteIndex + 1];
+                if (((0xA1 <= byte1 && byte1 <= 0xFE) && 
+                     (0xA1 <= byte2 && byte2 <= 0xFE)) ||
+                    (byte1 == 0x8E && 
+                     (0xA1 <= byte2 && byte2 <= 0xDF)))
                 {
                     //EUC_C
                     //EUC_KANA
-                    characterCountEuc += 2;
-                    i++;
+                    countEuc += 2;
+                    byteIndex++;
                 }
-                else if (i < bytesLength - 2)
+                else if (byteIndex < byteLength - 2)
                 {
-                    byte3 = bytes[i + 2];
-                    if (byte1 == 0x8F && (0xA1 <= byte2 && byte2 <= 0xFE) &&
+                    byte3 = bytes[byteIndex + 2];
+                    if (byte1 == 0x8F && 
+                        (0xA1 <= byte2 && byte2 <= 0xFE) &&
                         (0xA1 <= byte3 && byte3 <= 0xFE))
                     {
                         //EUC_0212
-                        characterCountEuc += 3;
-                        i += 2;
+                        countEuc += 3;
+                        byteIndex += 2;
                     }
                 }
             }
-            for (var i = 0; i < bytesLength - 1; i++)
+            for (int byteIndex = 0; byteIndex < byteLength - 1; byteIndex++)
             {
-                byte1 = bytes[i];
-                byte2 = bytes[i + 1];
-                if ((0xC0 <= byte1 && byte1 <= 0xDF) && (0x80 <= byte2 && byte2 <= 0xBF))
+                byte1 = bytes[byteIndex];
+                byte2 = bytes[byteIndex + 1];
+                if ((0xC0 <= byte1 && byte1 <= 0xDF) && 
+                    (0x80 <= byte2 && byte2 <= 0xBF))
                 {
                     //UTF8
-                    characterCountUtf8 += 2;
-                    i++;
+                    countUtf8 += 2;
+                    byteIndex++;
                 }
-                else if (i < bytesLength - 2)
+                else if (byteIndex < byteLength - 2)
                 {
-                    byte3 = bytes[i + 2];
-                    if ((0xE0 <= byte1 && byte1 <= 0xEF) && (0x80 <= byte2 && byte2 <= 0xBF) &&
+                    byte3 = bytes[byteIndex + 2];
+                    if ((0xE0 <= byte1 && byte1 <= 0xEF) && 
+                        (0x80 <= byte2 && byte2 <= 0xBF) &&
                         (0x80 <= byte3 && byte3 <= 0xBF))
                     {
                         //UTF8
-                        characterCountUtf8 += 3;
-                        i += 2;
+                        countUtf8 += 3;
+                        byteIndex += 2;
                     }
                 }
             }
-            //M. Takahashi's suggestion
-            //utf8 += utf8 / 2;
 
-            if (characterCountEuc > characterCountSjis && characterCountEuc > characterCountUtf8) return System.Text.Encoding.GetEncoding(51932);
-            if (characterCountSjis > characterCountEuc && characterCountSjis > characterCountUtf8) return System.Text.Encoding.GetEncoding(932);
-            if (characterCountUtf8 > characterCountEuc && characterCountUtf8 > characterCountSjis) return System.Text.Encoding.UTF8;
+            //EUC
+            if (countEuc > countSjis && 
+                countEuc > countUtf8) 
+                return System.Text.Encoding.GetEncoding(51932);
+
+            //SJIS
+            if (countSjis > countEuc && 
+                countSjis > countUtf8) 
+                return System.Text.Encoding.GetEncoding(932);
+
+            //UTF8
+            if (countUtf8 > countEuc && 
+                countUtf8 > countSjis) 
+                return System.Text.Encoding.UTF8;
+
             return default(System.Text.Encoding);
         }
         #endregion

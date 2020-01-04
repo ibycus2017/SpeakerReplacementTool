@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.tlpBody = new System.Windows.Forms.TableLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.cboDelimiter = new System.Windows.Forms.ComboBox();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.btnIncrease = new System.Windows.Forms.Button();
+            this.btnReduction = new System.Windows.Forms.Button();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnReduction = new System.Windows.Forms.Button();
-            this.btnIncrease = new System.Windows.Forms.Button();
-            this.btnImport = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cboDelimiter = new System.Windows.Forms.ComboBox();
-            this.lblEncoding = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.lblEncoding = new System.Windows.Forms.Label();
             this.tlpBody.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.SuspendLayout();
@@ -48,6 +48,7 @@
             // tlpBody
             // 
             this.tlpBody.AutoScroll = true;
+            this.tlpBody.BackColor = System.Drawing.SystemColors.Control;
             this.tlpBody.ColumnCount = 20;
             this.tlpBody.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tlpBody.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
@@ -72,12 +73,12 @@
             this.tlpBody.Controls.Add(this.label2, 1, 3);
             this.tlpBody.Controls.Add(this.lblTitle, 0, 0);
             this.tlpBody.Controls.Add(this.cboDelimiter, 1, 4);
-            this.tlpBody.Controls.Add(this.btnImport, 1, 5);
-            this.tlpBody.Controls.Add(this.btnIncrease, 11, 5);
-            this.tlpBody.Controls.Add(this.btnReduction, 15, 5);
-            this.tlpBody.Controls.Add(this.dgvMain, 1, 6);
-            this.tlpBody.Controls.Add(this.label1, 1, 16);
-            this.tlpBody.Controls.Add(this.lblEncoding, 1, 17);
+            this.tlpBody.Controls.Add(this.btnImport, 15, 4);
+            this.tlpBody.Controls.Add(this.btnIncrease, 11, 6);
+            this.tlpBody.Controls.Add(this.btnReduction, 15, 6);
+            this.tlpBody.Controls.Add(this.dgvMain, 1, 7);
+            this.tlpBody.Controls.Add(this.lblEncoding, 1, 18);
+            this.tlpBody.Controls.Add(this.label1, 1, 17);
             this.tlpBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpBody.Location = new System.Drawing.Point(0, 0);
             this.tlpBody.Margin = new System.Windows.Forms.Padding(0);
@@ -108,6 +109,21 @@
             this.tlpBody.Size = new System.Drawing.Size(784, 561);
             this.tlpBody.TabIndex = 1;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.SystemColors.Control;
+            this.tlpBody.SetColumnSpan(this.label2, 18);
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label2.Location = new System.Drawing.Point(39, 84);
+            this.label2.Margin = new System.Windows.Forms.Padding(0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(702, 28);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "区切り文字";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
@@ -126,12 +142,62 @@
             this.lblTitle.Text = "置換リスト";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // cboDelimiter
+            // 
+            this.tlpBody.SetColumnSpan(this.cboDelimiter, 13);
+            this.cboDelimiter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboDelimiter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDelimiter.FormattingEnabled = true;
+            this.cboDelimiter.Location = new System.Drawing.Point(39, 112);
+            this.cboDelimiter.Margin = new System.Windows.Forms.Padding(0);
+            this.cboDelimiter.Name = "cboDelimiter";
+            this.cboDelimiter.Size = new System.Drawing.Size(507, 27);
+            this.cboDelimiter.TabIndex = 0;
+            // 
+            // btnImport
+            // 
+            this.tlpBody.SetColumnSpan(this.btnImport, 4);
+            this.btnImport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnImport.Location = new System.Drawing.Point(585, 112);
+            this.btnImport.Margin = new System.Windows.Forms.Padding(0);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(156, 28);
+            this.btnImport.TabIndex = 1;
+            this.btnImport.Text = "ファイル取込";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // btnIncrease
+            // 
+            this.tlpBody.SetColumnSpan(this.btnIncrease, 4);
+            this.btnIncrease.Location = new System.Drawing.Point(429, 168);
+            this.btnIncrease.Margin = new System.Windows.Forms.Padding(0);
+            this.btnIncrease.Name = "btnIncrease";
+            this.btnIncrease.Size = new System.Drawing.Size(156, 28);
+            this.btnIncrease.TabIndex = 2;
+            this.btnIncrease.Text = "▼1行増やす";
+            this.btnIncrease.UseVisualStyleBackColor = true;
+            this.btnIncrease.Click += new System.EventHandler(this.btnIncrease_Click);
+            // 
+            // btnReduction
+            // 
+            this.tlpBody.SetColumnSpan(this.btnReduction, 4);
+            this.btnReduction.Location = new System.Drawing.Point(585, 168);
+            this.btnReduction.Margin = new System.Windows.Forms.Padding(0);
+            this.btnReduction.Name = "btnReduction";
+            this.btnReduction.Size = new System.Drawing.Size(156, 28);
+            this.btnReduction.TabIndex = 3;
+            this.btnReduction.Text = "▲1行減らす";
+            this.btnReduction.UseVisualStyleBackColor = true;
+            this.btnReduction.Click += new System.EventHandler(this.btnReduction_Click);
+            // 
             // dgvMain
             // 
             this.dgvMain.AllowUserToAddRows = false;
             this.dgvMain.AllowUserToDeleteRows = false;
             this.dgvMain.AllowUserToResizeColumns = false;
             this.dgvMain.AllowUserToResizeRows = false;
+            this.dgvMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMain.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -141,14 +207,14 @@
             this.dgvMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMain.EnableHeadersVisualStyles = false;
             this.dgvMain.ImeMode = System.Windows.Forms.ImeMode.Hiragana;
-            this.dgvMain.Location = new System.Drawing.Point(39, 168);
+            this.dgvMain.Location = new System.Drawing.Point(39, 196);
             this.dgvMain.Margin = new System.Windows.Forms.Padding(0);
             this.dgvMain.Name = "dgvMain";
             this.dgvMain.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.tlpBody.SetRowSpan(this.dgvMain, 10);
             this.dgvMain.RowTemplate.Height = 21;
             this.dgvMain.Size = new System.Drawing.Size(702, 280);
-            this.dgvMain.TabIndex = 1;
+            this.dgvMain.TabIndex = 4;
             // 
             // colId
             // 
@@ -175,66 +241,20 @@
             this.colNewValue.Name = "colNewValue";
             this.colNewValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // btnReduction
+            // label1
             // 
-            this.tlpBody.SetColumnSpan(this.btnReduction, 4);
-            this.btnReduction.Location = new System.Drawing.Point(585, 140);
-            this.btnReduction.Margin = new System.Windows.Forms.Padding(0);
-            this.btnReduction.Name = "btnReduction";
-            this.btnReduction.Size = new System.Drawing.Size(156, 28);
-            this.btnReduction.TabIndex = 8;
-            this.btnReduction.Text = "▲1行減らす";
-            this.btnReduction.UseVisualStyleBackColor = true;
-            this.btnReduction.Click += new System.EventHandler(this.btnReduction_Click);
-            // 
-            // btnIncrease
-            // 
-            this.tlpBody.SetColumnSpan(this.btnIncrease, 4);
-            this.btnIncrease.Location = new System.Drawing.Point(429, 140);
-            this.btnIncrease.Margin = new System.Windows.Forms.Padding(0);
-            this.btnIncrease.Name = "btnIncrease";
-            this.btnIncrease.Size = new System.Drawing.Size(156, 28);
-            this.btnIncrease.TabIndex = 7;
-            this.btnIncrease.Text = "▼1行増やす";
-            this.btnIncrease.UseVisualStyleBackColor = true;
-            this.btnIncrease.Click += new System.EventHandler(this.btnIncrease_Click);
-            // 
-            // btnImport
-            // 
-            this.tlpBody.SetColumnSpan(this.btnImport, 4);
-            this.btnImport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnImport.Location = new System.Drawing.Point(39, 140);
-            this.btnImport.Margin = new System.Windows.Forms.Padding(0);
-            this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(156, 28);
-            this.btnImport.TabIndex = 10;
-            this.btnImport.Text = "ファイル取込";
-            this.btnImport.UseVisualStyleBackColor = true;
-            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.tlpBody.SetColumnSpan(this.label2, 18);
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(39, 84);
-            this.label2.Margin = new System.Windows.Forms.Padding(0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(702, 28);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "区切り文字";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // cboDelimiter
-            // 
-            this.tlpBody.SetColumnSpan(this.cboDelimiter, 18);
-            this.cboDelimiter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboDelimiter.FormattingEnabled = true;
-            this.cboDelimiter.Location = new System.Drawing.Point(39, 112);
-            this.cboDelimiter.Margin = new System.Windows.Forms.Padding(0);
-            this.cboDelimiter.Name = "cboDelimiter";
-            this.cboDelimiter.Size = new System.Drawing.Size(702, 27);
-            this.cboDelimiter.TabIndex = 15;
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.Control;
+            this.tlpBody.SetColumnSpan(this.label1, 18);
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label1.Location = new System.Drawing.Point(39, 476);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(702, 28);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "文字コード";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblEncoding
             // 
@@ -243,25 +263,12 @@
             this.tlpBody.SetColumnSpan(this.lblEncoding, 18);
             this.lblEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblEncoding.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblEncoding.Location = new System.Drawing.Point(39, 476);
+            this.lblEncoding.Location = new System.Drawing.Point(39, 504);
             this.lblEncoding.Margin = new System.Windows.Forms.Padding(0);
             this.lblEncoding.Name = "lblEncoding";
             this.lblEncoding.Size = new System.Drawing.Size(702, 28);
             this.lblEncoding.TabIndex = 16;
             this.lblEncoding.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.tlpBody.SetColumnSpan(this.label1, 18);
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(39, 448);
-            this.label1.Margin = new System.Windows.Forms.Padding(0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(702, 28);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "文字コード";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FrmReplacementList
             // 

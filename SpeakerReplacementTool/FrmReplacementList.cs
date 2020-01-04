@@ -124,27 +124,27 @@ namespace SpeakerReplacementTool
 
             var dataRow = dataTable.NewRow();
             dataRow["code"] = "\t";
-            dataRow["name"] = "タブ";
+            dataRow["name"] = "文字：タブ";
             dataTable.Rows.Add(dataRow);
 
             dataRow = dataTable.NewRow();
             dataRow["code"] = ";";
-            dataRow["name"] = "セミコロン（;）";
+            dataRow["name"] = "文字：セミコロン（;）";
             dataTable.Rows.Add(dataRow);
 
             dataRow = dataTable.NewRow();
             dataRow["code"] = @",";
-            dataRow["name"] = @"カンマ（,）";
+            dataRow["name"] = @"文字：半角カンマ（,）";
             dataTable.Rows.Add(dataRow);
 
             dataRow = dataTable.NewRow();
             dataRow["code"] = @" ";
-            dataRow["name"] = @"スペース";
+            dataRow["name"] = @"文字：半角スペース";
             dataTable.Rows.Add(dataRow);
 
             dataRow = dataTable.NewRow();
-            dataRow["code"] = default(string);
-            dataRow["name"] = "なし";
+            dataRow["code"] = System.String.Empty;
+            dataRow["name"] = "文字：なし";
             dataTable.Rows.Add(dataRow);
 
             this.cboDelimiter.ValueMember = "code";
@@ -160,14 +160,15 @@ namespace SpeakerReplacementTool
         private void MakeDataGridView()
         {
             dgvMain.Rows.Clear();
-            var list = new ReplacementListReader().ReadList();
-            if (list.Count == 0) return;
-            foreach(ReplacementListDefine define in list)
+            var replacementList = new ReplacementListReader().ReadList();
+            if (replacementList.Count == 0) return;
+            foreach(ReplacementListDefine replacementListDefine in replacementList)
             {
-                dgvMain.Rows.Add();
-                dgvMain.Rows[dgvMain.Rows.Count - 1].Cells[COLS_IDX_NO].Value = Convert.ToString(dgvMain.Rows.Count);
-                dgvMain.Rows[dgvMain.Rows.Count - 1].Cells[COLS_IDX_OLD_VALUE].Value = define.OldValue;
-                dgvMain.Rows[dgvMain.Rows.Count - 1].Cells[COLS_IDX_NEW_VALUE].Value = define.NewValue;
+                this.dgvMain.Rows.Add();
+                var dgvMainRow = this.dgvMain.Rows[dgvMain.Rows.Count - 1];
+                dgvMainRow.Cells[COLS_IDX_NO].Value = Convert.ToString(dgvMain.Rows.Count);
+                dgvMainRow.Cells[COLS_IDX_OLD_VALUE].Value = replacementListDefine.OldValue;
+                dgvMainRow.Cells[COLS_IDX_NEW_VALUE].Value = replacementListDefine.NewValue;
             }
         }
         #endregion
@@ -238,6 +239,7 @@ namespace SpeakerReplacementTool
             var encoding = new EncodingFetcher().FetchEncoding(System.IO.File.ReadAllBytes(selectedFileName));
             if (encoding == default(System.Text.Encoding)) return;
             this.lblEncoding.Text = encoding.EncodingName;
+
             var readLines = (IReadOnlyList<string>)System.IO.File.ReadAllLines(selectedFileName, encoding);
             this.dgvMain.Rows.Clear();
             foreach (var readLine in readLines)
@@ -246,10 +248,10 @@ namespace SpeakerReplacementTool
                 readValues.AddRange(readLine.Split(Convert.ToChar(this.cboDelimiter.SelectedValue)));
 
                 this.dgvMain.Rows.Add();
-                var dgvRows = this.dgvMain.Rows[this.dgvMain.Rows.Count - 1];
-                dgvRows.Cells[COLS_IDX_NO].Value = Convert.ToString(this.dgvMain.Rows.Count);
-                dgvRows.Cells[COLS_IDX_OLD_VALUE].Value = (default(int) + 0 <= readValues.Count - 1) ? Convert.ToString(readValues[default(int) + 0]) : default(string);
-                dgvRows.Cells[COLS_IDX_NEW_VALUE].Value = (default(int) + 1 <= readValues.Count - 1) ? Convert.ToString(readValues[default(int) + 1]) : default(string);
+                var dgvMainRow = this.dgvMain.Rows[this.dgvMain.Rows.Count - 1];
+                dgvMainRow.Cells[COLS_IDX_NO].Value = Convert.ToString(this.dgvMain.Rows.Count);
+                dgvMainRow.Cells[COLS_IDX_OLD_VALUE].Value = (0 <= readValues.Count - 1) ? Convert.ToString(readValues[0]) : System.String.Empty;
+                dgvMainRow.Cells[COLS_IDX_NEW_VALUE].Value = (1 <= readValues.Count - 1) ? Convert.ToString(readValues[1]) : System.String.Empty;
             }
         }
         #endregion

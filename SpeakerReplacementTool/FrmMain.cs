@@ -91,7 +91,7 @@ namespace SpeakerReplacementTool
             if (replacementList.Count == default(int)) return;
 
             var selectedFileName = this.FetchSelectedFileName();
-            if (selectedFileName == default(string)) return;
+            if (selectedFileName == System.String.Empty) return;
 
             var encoding = new EncodingFetcher().FetchEncoding(System.IO.File.ReadAllBytes(selectedFileName));
             if (encoding == default(System.Text.Encoding)) return;

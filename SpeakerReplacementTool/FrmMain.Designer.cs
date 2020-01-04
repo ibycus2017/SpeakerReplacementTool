@@ -217,6 +217,7 @@
             this.dgvOld.AllowUserToDeleteRows = false;
             this.dgvOld.AllowUserToResizeColumns = false;
             this.dgvOld.AllowUserToResizeRows = false;
+            this.dgvOld.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.dgvOld.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOld.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colOldValue});
@@ -250,6 +251,7 @@
             this.dgvNew.AllowUserToDeleteRows = false;
             this.dgvNew.AllowUserToResizeColumns = false;
             this.dgvNew.AllowUserToResizeRows = false;
+            this.dgvNew.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.dgvNew.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvNew.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn3});
@@ -281,6 +283,7 @@
             // 
             this.lblEncoding.AutoSize = true;
             this.lblEncoding.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lblEncoding.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tlpBody.SetColumnSpan(this.lblEncoding, 18);
             this.lblEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblEncoding.ForeColor = System.Drawing.SystemColors.ControlLightLight;

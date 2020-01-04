@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpeakerReplacementTool
 {
-    class ReplacementListWriter
+    public class ReplacementListWriter
     {
         #region プロパティ
         /// <summary>
