@@ -34,6 +34,18 @@ namespace SpeakerReplacementTool
         }
         #endregion
 
+        #region イベント（フォームクロージング）
+        /// <summary>
+        /// イベント（フォームクロージング）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.SaveFormParameters();
+        }
+        #endregion
+
         #region イベント（ボタンクリック：ファイル置換）
         /// <summary>
         /// イベント（ボタンクリック：ファイル置換）
@@ -77,7 +89,9 @@ namespace SpeakerReplacementTool
         /// </summary>
         private void MakeScreen()
         {
-            this.txtDelimiter.Text = "：";
+            var formParameters = new FormParametersReader().ReadParameters();
+            foreach(FormParametersDefine formParametesDefine in formParameters)
+                this.txtDelimiter.Text = formParametesDefine.FrmMainDelimiter;
         }
         #endregion
 
@@ -212,5 +226,22 @@ namespace SpeakerReplacementTool
             form.Dispose();
         }
         #endregion
+
+        #region メソッド（画面パラメータ書き込み）
+        /// <summary>
+        /// メソッド（画面パラメータ書き込み）
+        /// </summary>
+        private void SaveFormParameters()
+        {
+            var formParameters = new FormParametersReader().ReadParameters();
+            var formParametersDefine = new FormParametersDefine();
+            if (formParameters.Count > 0) formParametersDefine = formParameters[0];
+            formParametersDefine.FrmMainDelimiter = Convert.ToString(txtDelimiter.Text);
+
+            var formParametersWriter = new FormParametersWriter();
+            formParametersWriter.SourceList.Add(formParametersDefine);
+            formParametersWriter.WriteParameters();
+        }
+        #endregion                    
     }
 }

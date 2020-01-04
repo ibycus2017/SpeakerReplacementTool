@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace SpeakerReplacementTool
 {
-    public class ReplacementListReader
+    public class FormParametersReader
     {
         #region プロパティ
         /// <summary>
         /// プロパティ
         /// </summary>
-        private string FilePath { get; set; } = System.Environment.CurrentDirectory + @"\Save\" + "ReplacementList.xml";
+        private string FilePath { get; set; } = System.Environment.CurrentDirectory + @"\Settings\" + "FormParameters.xml";
         #endregion
 
         #region メソッド（リスト読取）
@@ -20,9 +20,9 @@ namespace SpeakerReplacementTool
         /// メソッド（リスト読取）
         /// </summary>
         /// <returns></returns>
-        public IReadOnlyList<ReplacementListDefine> ReadList()
+        public IReadOnlyList<FormParametersDefine> ReadParameters()
         {
-            var replacementList = new List<ReplacementListDefine>();
+            var formParameters = new List<FormParametersDefine>();
             if (System.IO.File.Exists(FilePath) == true)
             {
                 var dataSet = new System.Data.DataSet();
@@ -34,13 +34,13 @@ namespace SpeakerReplacementTool
                         var dataTable = dataSet.Tables[0];
                         foreach(System.Data.DataRow dataRow in dataTable.Rows)
                         {
-                            var replacementListDefine = new ReplacementListDefine();
+                            var formParametersDefine = new FormParametersDefine();
                             var dataTableColumns = dataTable.Columns;
-                            if (dataTableColumns.Contains("colOldValue") == true) 
-                                replacementListDefine.OldValue = Convert.ToString(dataRow["colOldValue"]);
-                            if (dataTableColumns.Contains("colNewValue") == true) 
-                                replacementListDefine.NewValue = Convert.ToString(dataRow["colNewValue"]);
-                            replacementList.Add(replacementListDefine);
+                            if (dataTableColumns.Contains("FrmReplacementListDelimiter") == true)
+                                formParametersDefine.FrmReplacementListDelimiter = Convert.ToString(dataRow["FrmReplacementListDelimiter"]);
+                            if (dataTableColumns.Contains("FrmMainDelimiter") == true)
+                                formParametersDefine.FrmMainDelimiter = Convert.ToString(dataRow["FrmMainDelimiter"]);
+                            formParameters.Add(formParametersDefine);
                         }
                     }
                 }
@@ -49,7 +49,7 @@ namespace SpeakerReplacementTool
                     System.Console.WriteLine(exception.Message);
                 }
             }
-            return replacementList;
+            return formParameters;
         }
         #endregion
     }

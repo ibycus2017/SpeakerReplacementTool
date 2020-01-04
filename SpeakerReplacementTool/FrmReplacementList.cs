@@ -52,6 +52,7 @@ namespace SpeakerReplacementTool
         private void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.SaveReplacementList();
+            this.SaveFormParameters();
         }
         #endregion
 
@@ -99,6 +100,9 @@ namespace SpeakerReplacementTool
         {
             this.MakeComboBox();
             this.MakeDataGridView();
+            var formParameters = new FormParametersReader().ReadParameters();
+            foreach (FormParametersDefine formParametesDefine in formParameters)
+                cboDelimiter.SelectedValue = formParametesDefine.FrmReplacementListDelimiter;
         }
         #endregion
 
@@ -196,6 +200,24 @@ namespace SpeakerReplacementTool
             var replacementListWriter = new ReplacementListWriter();
             replacementListWriter.SourceData = dataTable;
             replacementListWriter.WriteList();
+
+        }
+        #endregion
+
+        #region メソッド（画面パラメータ書き込み）
+        /// <summary>
+        /// メソッド（画面パラメータ書き込み）
+        /// </summary>
+        private void SaveFormParameters()
+        {
+            var formParameters = new FormParametersReader().ReadParameters();
+            var formParametersDefine = new FormParametersDefine();
+            if(formParameters.Count > 0) formParametersDefine = formParameters[0];
+            formParametersDefine.FrmReplacementListDelimiter = Convert.ToString(cboDelimiter.SelectedValue);
+
+            var formParametersWriter = new FormParametersWriter();
+            formParametersWriter.SourceList.Add(formParametersDefine);
+            formParametersWriter.WriteParameters();
         }
         #endregion
 

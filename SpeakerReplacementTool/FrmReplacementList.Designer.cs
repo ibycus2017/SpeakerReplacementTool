@@ -39,8 +39,8 @@
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
             this.lblEncoding = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.tlpBody.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.SuspendLayout();
@@ -241,6 +241,20 @@
             this.colNewValue.Name = "colNewValue";
             this.colNewValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // lblEncoding
+            // 
+            this.lblEncoding.AutoSize = true;
+            this.lblEncoding.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.tlpBody.SetColumnSpan(this.lblEncoding, 18);
+            this.lblEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblEncoding.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblEncoding.Location = new System.Drawing.Point(39, 504);
+            this.lblEncoding.Margin = new System.Windows.Forms.Padding(0);
+            this.lblEncoding.Name = "lblEncoding";
+            this.lblEncoding.Size = new System.Drawing.Size(702, 28);
+            this.lblEncoding.TabIndex = 16;
+            this.lblEncoding.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -255,20 +269,6 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "文字コード";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblEncoding
-            // 
-            this.lblEncoding.AutoSize = true;
-            this.lblEncoding.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.tlpBody.SetColumnSpan(this.lblEncoding, 18);
-            this.lblEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEncoding.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblEncoding.Location = new System.Drawing.Point(39, 504);
-            this.lblEncoding.Margin = new System.Windows.Forms.Padding(0);
-            this.lblEncoding.Name = "lblEncoding";
-            this.lblEncoding.Size = new System.Drawing.Size(702, 28);
-            this.lblEncoding.TabIndex = 16;
-            this.lblEncoding.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FrmReplacementList
             // 

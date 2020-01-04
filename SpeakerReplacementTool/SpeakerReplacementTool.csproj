@@ -76,8 +76,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FormParametersDefine.cs" />
     <Compile Include="ReplacementListDefine.cs" />
+    <Compile Include="FormParametersReader.cs" />
     <Compile Include="ReplacementListReader.cs" />
+    <Compile Include="FormParametersWriter.cs" />
     <Compile Include="ReplacementListWriter.cs" />
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
